@@ -1,0 +1,2 @@
+DB_NAME = "test_db"
+PREDICTION_OUTPUT_COLLECTION_NAME = "preds"

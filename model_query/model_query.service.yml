@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: model-query
+  labels:
+    app: model-query
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 8080
+      nodePort: 32081
+  selector:
+    app: model-query

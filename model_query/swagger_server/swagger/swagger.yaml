@@ -1,0 +1,88 @@
+openapi: 3.0.0
+info:
+  title: Prediction Query Module
+  description: Prediction Query Module
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /api/v1/search:
+    get:
+      tags:
+      - prediction_query
+      summary: Search predictions
+      operationId: api_v1_search_get
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/searchPredictionGetBody'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/searchFilterPredictionResponse'
+        "400":
+          description: Failed. Bad post data.
+      x-openapi-router-controller: swagger_server.controllers.prediction_query_controller
+  /api/v1/filter:
+    get:
+      tags:
+      - prediction_query
+      summary: Filter predictions
+      operationId: api_v1_filter_get
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/filterPredictionGetBody'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/searchFilterPredictionResponse'
+        "400":
+          description: Failed. Bad post data.
+      x-openapi-router-controller: swagger_server.controllers.prediction_query_controller
+components:
+  schemas:
+    filterPredictionGetBody:
+      required:
+      - column
+      - operator
+      - value
+      type: object
+      properties:
+        column:
+          type: string
+        operator:
+          type: string
+        value:
+          type: string
+    searchPredictionGetBody:
+      required:
+      - prediction_id
+      type: object
+      properties:
+        prediction_id:
+          type: string
+    searchFilterPredictionResponse:
+      required:
+      - records
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            type: object
+      example:
+        records:
+        - {}
+        - {}
+

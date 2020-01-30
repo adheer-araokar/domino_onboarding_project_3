@@ -1,0 +1,89 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Model based Predictor",
+    "version": "1.0.0",
+    "title": "Model based Predictor"
+  },
+  "paths": {
+    "/api/v1/predict": {
+      "get": {
+        "tags": [
+          "model_based_predictor"
+        ],
+        "summary": "Predicts the output basis the model.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/predctionGetBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/predictionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "predictionInputData": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          "y": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "required": ["x", "y"]
+      },
+      "predctionGetBody": {
+        "type": "object",
+        "required": ["input_data"],
+        "properties": {
+          "input_data": {
+            "$ref": "#/components/schemas/predictionInputData"
+          }
+        }
+      },
+      "predictionResponse": {
+        "type": "object",
+        "required": ["prediction_id", "prediction"],
+        "properties": {
+          "prediction_id": {
+            "type": "string"
+          },
+          "prediction": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

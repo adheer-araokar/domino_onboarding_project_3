@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: model-query
+spec:
+  selector:
+    matchLabels:
+      app: model-query
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: model-query
+    spec:
+      containers:
+        - name: model-query
+          image: model-query
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MONGO_HOST
+              value: "mongo"
+            - name: MONGO_PORT
+              value: "27017"

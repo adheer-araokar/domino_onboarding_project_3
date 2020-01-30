@@ -1,0 +1,69 @@
+openapi: 3.0.0
+info:
+  title: Model based Predictor
+  description: Model based Predictor
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /api/v1/predict:
+    get:
+      tags:
+      - model_based_predictor
+      summary: Predicts the output basis the model.
+      operationId: api_v1_predict_get
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/predctionGetBody'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/predictionResponse'
+        "400":
+          description: Failed. Bad post data.
+      x-openapi-router-controller: swagger_server.controllers.model_based_predictor_controller
+components:
+  schemas:
+    predictionInputData:
+      required:
+      - x
+      - "y"
+      type: object
+      properties:
+        x:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+        y:
+          type: array
+          items:
+            type: number
+    predctionGetBody:
+      required:
+      - input_data
+      type: object
+      properties:
+        input_data:
+          $ref: '#/components/schemas/predictionInputData'
+    predictionResponse:
+      required:
+      - prediction
+      - prediction_id
+      type: object
+      properties:
+        prediction_id:
+          type: string
+        prediction:
+          type: number
+      example:
+        prediction_id: prediction_id
+        prediction: 0.8008281904610115
+

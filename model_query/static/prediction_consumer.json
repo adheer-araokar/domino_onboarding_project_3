@@ -1,0 +1,116 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Prediction Query Module",
+    "version": "1.0.0",
+    "title": "Prediction Query Module"
+  },
+  "paths": {
+    "/api/v1/search": {
+      "get": {
+        "tags": [
+          "prediction_query"
+        ],
+        "summary": "Search predictions",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/searchPredictionGetBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/searchFilterPredictionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/api/v1/filter": {
+      "get": {
+        "tags": [
+          "prediction_query"
+        ],
+        "summary": "Filter predictions",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/filterPredictionGetBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/searchFilterPredictionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "filterPredictionGetBody": {
+        "type": "object",
+        "required": ["column", "operator", "value"],
+        "properties": {
+          "column": {
+            "type": "string"
+          },
+          "operator": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "searchPredictionGetBody": {
+        "type": "object",
+        "properties": {
+          "prediction_id": {
+            "type": "string"
+          }
+        },
+        "required": ["prediction_id"]
+      },
+      "searchFilterPredictionResponse": {
+        "type": "object",
+        "required": ["records"],
+        "properties": {
+          "records": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    }
+  }
+}

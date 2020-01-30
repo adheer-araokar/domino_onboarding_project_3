@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: model-consumer
+spec:
+  selector:
+    matchLabels:
+      app: model-consumer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: model-consumer
+    spec:
+      containers:
+        - name: model-consumer
+          image: model-consumer
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: MONGO_HOST
+              value: "mongo"
+            - name: MONGO_PORT
+              value: "27017"
+            - name: KAFKA_HOST
+              value: "kafka:9092"
